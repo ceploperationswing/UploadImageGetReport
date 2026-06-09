@@ -335,8 +335,13 @@
 
         <div class="formRow">
             <label>Coordinates</label>
-
             <input type="text" id="coordinates" placeholder="26.843987,81.943913">
+        </div>
+        <div class="formRow">
+            <label>Google Maps</label>
+            <a id="gpsLink" href="#" target="_blank" style="font-size: 16px;">
+                Open Location in Google Maps
+            </a>
         </div>
 
         <div class="formRow">
@@ -748,48 +753,115 @@
             return null;
         }
 
+
+        let lastLat = null;
+        let lastLng = null;
+
+        function getDistanceMeters(lat1, lon1, lat2, lon2) {
+
+            const R = 6371000;
+
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+
+            const a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) *
+                Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon / 2) *
+                Math.sin(dLon / 2);
+
+            return R * 2 * Math.atan2(
+                Math.sqrt(a),
+                Math.sqrt(1 - a)
+            );
+        }
+
         async function fetchAddressFromCoordinates() {
 
             const parsed = parseCoordinates(coordinates.value);
 
             if (!parsed) return;
 
+            const { lat, lng } = parsed;
+
+            // Refresh only if moved more than 10 meters
+            if (lastLat !== null && lastLng !== null) {
+
+                const distance =
+                    getDistanceMeters(
+                        lastLat,
+                        lastLng,
+                        lat,
+                        lng
+                    );
+
+                if (distance < 10) {
+                    loadLocation();
+                    return;
+                }
+            }
+
+            lastLat = lat;
+            lastLng = lng;
+
             try {
 
-                const res =
-                    await fetch(
-                        `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${parsed.lat}&lon=${parsed.lng}`
-                    );
+                const res = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=19&addressdetails=1`
+                );
 
                 const data = await res.json();
 
-                if (!data.address) return;
+                if (!data) return;
 
-                const a = data.address;
+                // Most detailed address available
+                if (data.display_name) {
 
-                address.value = [
-                    a.village || a.hamlet || a.suburb || a.neighbourhood || "",
-                    a.county || a.city_district || a.tehsil || a.state_district || "",
-                    a.state || "",
-                    `${a.postcode || ""}${a.country ? ", " + a.country : ""}`
-                ]
-                    .filter(Boolean)
-                    .join("\n");
+                    let parts = data.display_name
+                        .split(",")
+                        .map(item => item.trim());
 
-                // Automatically refresh map and overlay
+                    // Remove India
+                    parts = parts.filter(
+                        part => !/^india$/i.test(part)
+                    );
+
+                    // Remove PIN code (5–7 digit postal codes)
+
+
+                    address.value = parts.join("\n");
+
+                } else {
+
+                    address.value = "Address not found";
+
+                }
+
+                // Refresh map and overlay
                 loadLocation();
 
             } catch (e) {
 
-                console.log(e);
+                console.error(
+                    "Address lookup failed:",
+                    e
+                );
 
+                loadLocation();
             }
         }
+
+
+
         function loadLocation() {
             const parsed = parseCoordinates(coordinates.value);
             if (!parsed) { alert("Invalid coordinate format"); return; }
 
             const { lat, lng } = parsed;
+            const gpsLink =
+                `https://maps.google.com/?q=${coordinates.value}`;
+            document.getElementById("gpsLink").href = gpsLink;
 
             locationInfo.innerHTML = `
 <div>${dateTime.value}</div>
