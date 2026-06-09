@@ -75,7 +75,7 @@
         th,
         td {
             border: 1px solid #000;
-            padding: 7px;
+            padding: 5px;
             vertical-align: middle;
             font-size: 14px;
             text-align: left;
@@ -91,7 +91,7 @@
             page-break-before: always;
             break-before: page;
             text-align: center;
-            margin-top: 20px;
+
         }
 
         .pic_div {
@@ -126,9 +126,9 @@
             position: absolute;
             bottom: 15px;
             left: 15px;
-            width: 120px;
-            height: 100px;
-            border-radius: 10px;
+            width: 100px;
+            height: 80px;
+            border-radius: 5px;
             overflow: hidden;
             background: #fff;
             opacity: .75
@@ -145,7 +145,8 @@
             right: 15px;
             color: #fff;
             text-align: right;
-            text-shadow: 2px 2px 4px #000
+            text-shadow: 2px 2px 4px #000;
+            font-size: 12px;
         }
 
         .logo,
@@ -153,7 +154,7 @@
             position: absolute;
             color: #fff;
             z-index: 1000;
-            font-size: 10px;
+            font-size: 8px;
             text-shadow: 1px 1px 2px #000
         }
 
@@ -269,6 +270,33 @@
                 width: 100%;
             }
         }
+
+        .container {
+            border: 2px solid #000;
+            padding: 5px;
+            margin: 10px auto;
+            background: #fff;
+            page-break-inside: avoid;
+        }
+
+        .logos {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding-bottom: 5px;
+            margin: 0px;
+        }
+
+        .rec_logo {
+            width: 120px;
+            height: 50px;
+        }
+
+        .npti_logo {
+            width: 130px;
+            height: 60px;
+        }
     </style>
     <!---STYPE TAG END-->
 </head>
@@ -321,14 +349,23 @@
             <button onclick="loadLocation()" class="gpsBtn">
                 Update GPS Details
             </button>
+            <button onclick="takeScreenshot()" class="gpsBtn" style="background: red;">Take Screenshot of GPS
+                Image</button>
         </div>
-      </div>
+    </div>
     <!--REPORT GENERATOR DIV-->
 
-    <div class="main">
+    <!---DATA DIV START-->
 
-        <!---DATA DIV START-->
-        <div class="container page-break">
+    <div class=" page-break">
+        <div class="container">
+            <div class="logos">
+                <img class="rec_logo"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/REC_logo.svg/1280px-REC_logo.svg.png"
+                    alt="">
+                <img src="https://www.uxdt.nic.in/wp-content/uploads/2024/09/npti-01.jpg?x29347" alt=""
+                    class="npti_logo">
+            </div>
             <table id="table_ex">
 
                 <colgroup>
@@ -388,100 +425,105 @@
                         <td colspan="1">iii. ConnecIon Type</td>
                         <td colspan="1">
                             <div class="value" id="connectionTypeValue"></div>
+
+                        </td>
+                        <td colspan="2">iv. Type of smart meter (3Ph/1Ph)</td>
+                        <td colspan="1">
+                            <div class="value" id="smartMeterValue"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">v. Consumer Number /K No.:</td>
+                        <td colspan="1">
+                            <div class="value" id="consumerNumberValue"></div>
+                        </td>
+                        <td colspan="2">vi. Make/ Manufacturer detail:</td>
+                        <td colspan="1">
+                            <div class="value" id="manufacturerValue"></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="1">vii. Type of communicaIon for
+                            consumer smart system is
+                            being used (cellular/RF)</td>
+                        <td colspan="1">
+                            <div class="value" id="communicationValue"></div>
+                        </td>
+                        <td colspan="2">viii. Date of inspecIon</td>
+                        <td colspan="1">
+                            <div class="value" id="inspectionValue"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">ix. Address:</td>
+                        <td colspan="4">
+                            <div class="value" id="addressValue"></div>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td colspan="1">x.Remark:</td>
+                        <td colspan="4">
+                            <div class="value" id="remarkValue"></div>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td colspan="5"><b>B. Workmanship & other details: </b></td>
+                    </tr>
+                    <!--- Section B-->
+                    <tr>
+                        <td colspan="3">i. Whether installaIon /erecIon of service cable is
+                            proper?</td>
+                        <td colspan="1" style="text-align: center;">(Yes/No)</td>
+                        <td colspan="1" style="text-align: center;"><textarea name="Choice" class="text_area"
+                                rows="1"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">ii. Whether smart meter is properly mounted/installed
+                            as per approved Drawing?/td>
+                        <td colspan="1" style="text-align: center;">(Yes/No)</td>
+                        <td colspan="1" style="text-align: center;"><textarea name="Choice" class="text_area"
+                                rows="1"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">iii. Whether smart meter is properly sealed as per
+                            approved drawing?</td>
+                        <td colspan="1" style="text-align: center;">(Yes/No)</td>
+                        <td colspan="1" style="text-align: center;"><textarea name="Choice" class="text_area"
+                                rows="1"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">iv. Whether consumer smart meter is operaIonal?</td>
+                        <td colspan="1" style="text-align: center;">(Yes/No)</td>
+                        <td colspan="1" style="text-align: center;"><textarea name="Choice" class="text_area"
+                                rows="1"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">v. Whether 1st Bill is Generated</td>
+                        <td colspan="1" style="text-align: center;">(Yes/No)</td>
+                        <td colspan="1" style="text-align: center;"><textarea name="Choice" class="text_area"
+                                rows="1"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">Vi. General remarks:</td>
+                        <td colspan="1" style="text-align: center;">(Yes/No)</td>
+                        <td colspan="1" style="text-align: center;"><textarea name="Choice" class="text_area"
+                                rows="1"></textarea>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+            <br>
         </div>
-        </td>
-        <td colspan="2">iv. Type of smart meter (3Ph/1Ph)</td>
-        <td colspan="1">
-    </div>
-    <div class="value" id="smartMeterValue"></div>
-    </td>
-    </tr>
-    <tr>
-        <td colspan="1">v. Consumer Number /K No.:</td>
-        <td colspan="1">
-            <div class="value" id="consumerNumberValue"></div>
-        </td>
-        <td colspan="2">vi. Make/ Manufacturer detail:</td>
-        <td colspan="1">
-            <div class="value" id="manufacturerValue"></div>
-        </td>
-    </tr>
-
-    <tr>
-        <td colspan="1">vii. Type of communicaIon for
-            consumer smart system is
-            being used (cellular/RF)</td>
-        <td colspan="1">
-            <div class="value" id="communicationValue"></div>
-        </td>
-        <td colspan="2">viii. Date of inspecIon</td>
-        <td colspan="1">
-            <div class="value" id="inspectionValue"></div>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="1">ix. Address:</td>
-        <td colspan="4">
-            <div class="value" id="addressValue"></div>
-        </td>
-
-    </tr>
-    <tr>
-        <td colspan="1">x.Remark:</td>
-        <td colspan="4">
-            <div class="value" id="remarkValue"></div>
-        </td>
-
-    </tr>
-    <tr>
-        <td colspan="5"><b>B. Workmanship & other details: </b></td>
-    </tr>
-    <!--- Section B-->
-    <tr>
-        <td colspan="3">i. Whether installaIon /erecIon of service cable is
-            proper?</td>
-        <td colspan="1" style="text-align: center;">(Yes/No)</td>
-        <td colspan="1" style="text-align: center;"><textarea name="Choice" class="text_area" rows="1"></textarea>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3">ii. Whether smart meter is properly mounted/installed
-            as per approved Drawing?/td>
-        <td colspan="1" style="text-align: center;">(Yes/No)</td>
-        <td colspan="1" style="text-align: center;"><textarea name="Choice" class="text_area" rows="1"></textarea>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3">iii. Whether smart meter is properly sealed as per
-            approved drawing?</td>
-        <td colspan="1" style="text-align: center;">(Yes/No)</td>
-        <td colspan="1" style="text-align: center;"><textarea name="Choice" class="text_area" rows="1"></textarea>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3">iv. Whether consumer smart meter is operaIonal?</td>
-        <td colspan="1" style="text-align: center;">(Yes/No)</td>
-        <td colspan="1" style="text-align: center;"><textarea name="Choice" class="text_area" rows="1"></textarea>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3">v. Whether 1st Bill is Generated</td>
-        <td colspan="1" style="text-align: center;">(Yes/No)</td>
-        <td colspan="1" style="text-align: center;"><textarea name="Choice" class="text_area" rows="1"></textarea>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3">Vi. General remarks:</td>
-        <td colspan="1" style="text-align: center;">(Yes/No)</td>
-        <td colspan="1" style="text-align: center;"><textarea name="Choice" class="text_area" rows="1"></textarea>
-        </td>
-    </tr>
-
-    </tbody>
-
-    </table>
-
-
     </div>
     <!---DATA DIV END -->
     </div>
@@ -764,16 +806,38 @@
         coordinates.addEventListener("blur", fetchAddressFromCoordinates);
 
         function takeScreenshot() {
-            html2canvas(document.getElementById("captureArea"), {
-                useCORS: true,
-                allowTaint: true,
-                scale: 2
-            }).then(canvas => {
-                const link = document.createElement("a");
-                link.download = "GPS_Image.png";
-                link.href = canvas.toDataURL("image/png");
+
+            const meterSerial =
+                document.getElementById("meterSerialValue")
+                    .textContent
+                    .trim();
+
+            const fileName =
+                (meterSerial || "GPS_Image")
+                    .replace(/[<>:"/\\|?*]+/g, "_");
+
+            html2canvas(
+                document.getElementById("captureArea"),
+                {
+                    useCORS: true,
+                    allowTaint: true,
+                    scale: 2
+                }
+            ).then(canvas => {
+
+                const link =
+                    document.createElement("a");
+
+                link.download =
+                    fileName + ".png";
+
+                link.href =
+                    canvas.toDataURL("image/png");
+
                 link.click();
+
             });
+
         }
 
         initializeMap();
