@@ -308,6 +308,40 @@
     <div class="searchCard">
 
         <h4>Meter Record Search</h4>
+        <div class="formRow">
+
+            <label>Select Sheet</label>
+
+            <select id="sheetName">
+
+                <option value="Data Sheet 1">
+                    Data Sheet 1
+                </option>
+
+                <option value="Data Sheet 2">
+                    Data sheet 2
+                </option>
+
+                <option value="Data Sheet 3">
+                    Data Sheet 3
+                </option>
+                <option value="Data Sheet 1">
+                    Data Sheet 4
+                </option>
+                <option value="Data Sheet 1">
+                    Data Sheet 5
+                </option>
+                <option value="Data Sheet 1">
+                    Data Sheet 6
+                </option>
+                <option value="Data Sheet 1">
+                    Data Sheet 7
+                </option>
+
+
+            </select>
+
+        </div>
 
         <div class="formRow">
             <label>Photo Number</label>
@@ -320,14 +354,12 @@
                 </button>
             </div>
         </div>
-        
         <div class="formRow">
-            <label style="color: red;">Photo No. :-</label> 
-            <label style="color: red;"><a id="photoNoValue2"></a></label> 
-            <label style="color: red;">Meter Serial No. :- </label> 
-            <label style="color: red;"><a id="meterSerialValue2"></s></label> 
+            <label style="color: red;">Photo No. :-</label>
+            <label style="color: red;"><a id="photoNoValue2"></a></label>
+            <label style="color: red;">Meter Serial No. :- </label>
+            <label style="color: red;"><a id="meterSerialValue2"></s></label>
         </div>
-    
 
         <div class="formRow">
             <label>Meter Picture</label>
@@ -347,7 +379,7 @@
         </div>
         <div class="formRow">
             <label>Google Maps</label>
-            &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+            &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             <a id="gpsLink" href="#" target="_blank" style="font-size: 16px;">
                 Open Location in Google Maps
             </a>
@@ -545,7 +577,7 @@
     <script>
         //Report Generator Script
         const API_URL =
-            "https://script.google.com/macros/s/AKfycbzpPdtL4AZqHhsGigyEdlO6pJcc4TocTliWvAvDEWul9JmGVZAs7yfgWvXEK3TUjcY/exec";
+            "https://script.google.com/macros/s/AKfycbyCpaZXtSz7Rm32bucHqjwq5PviuTS11heB4x3w_m9z-jkwjan_CBUJF4xNEsHmFog/exec";
 
         async function searchRecord() {
 
@@ -560,10 +592,17 @@
 
             try {
 
+                const sheet =
+                    document
+                        .getElementById("sheetName")
+                        .value;
+
                 const response =
                     await fetch(
                         API_URL +
-                        "?photoNo=" +
+                        "?sheet=" +
+                        encodeURIComponent(sheet) +
+                        "&photoNo=" +
                         encodeURIComponent(photoNo)
                     );
 
