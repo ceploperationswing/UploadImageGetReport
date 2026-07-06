@@ -309,37 +309,15 @@
 
         <h4>Meter Record Search</h4>
         <div class="formRow">
+            <div class="formRow">
 
-            <label>Select Sheet</label>
+                <label>Select Sheet</label>
 
-            <select id="sheetName">
+                <select id="sheetName">
+                    <option>Loading...</option>
+                </select>
 
-                <option value="Data Sheet 1">
-                    Data Sheet 1
-                </option>
-
-                <option value="Data Sheet 2">
-                    Data sheet 2
-                </option>
-
-                <option value="Data Sheet 3">
-                    Data Sheet 3
-                </option>
-                <option value="Data Sheet 4">
-                    Data Sheet 4
-                </option>
-                <option value="Data Sheet 5">
-                    Data Sheet 5
-                </option>
-                <option value="Data Sheet 6">
-                    Data Sheet 6
-                </option>
-                <option value="Data Sheet 7">
-                    Data Sheet 7
-                </option>
-
-
-            </select>
+            </div>
 
         </div>
 
@@ -575,11 +553,71 @@
     </div>
 
     <script>
+
+        //load all sheets
+        async function loadSheets() {
+
+            try {
+
+                const response =
+                    await fetch(
+                        API_URL + "?action=getSheets"
+                    );
+
+                const result =
+                    await response.json();
+
+                if (!result.success) {
+
+                    alert("Unable to load sheets");
+                    return;
+
+                }
+
+                const select =
+                    document.getElementById("sheetName");
+
+                select.innerHTML = "";
+
+                result.sheets.forEach(function (sheet) {
+
+                    const option =
+                        document.createElement("option");
+
+                    option.value = sheet;
+                    option.textContent = sheet;
+
+                    select.appendChild(option);
+
+                });
+
+            }
+            catch (err) {
+
+                alert(err);
+
+            }
+
+        }
+
         //Report Generator Script
         const API_URL =
-            "https://script.google.com/macros/s/AKfycbyCpaZXtSz7Rm32bucHqjwq5PviuTS11heB4x3w_m9z-jkwjan_CBUJF4xNEsHmFog/exec";
+            "https://script.google.com/macros/s/AKfycbyEe_XZ5SLWMobZgvEtq8H91HIZoaVAmpJjOPsfZw0mCSEZTRQIFqekL4nPCssw4WQ/exec";
 
         async function searchRecord() {
+
+            const sheet =
+                document.getElementById("sheetName").value;
+
+            const response =
+                await fetch(
+                    API_URL +
+                    "?sheet=" +
+                    encodeURIComponent(sheet) +
+                    "&photoNo=" +
+                    encodeURIComponent(photoNo)
+                );
+
 
             const photoNo =
                 document.getElementById("photoNo")
@@ -965,6 +1003,7 @@
         initializeMap();
 
         //download PDF
+        loadSheets();
 
     </script>
 
